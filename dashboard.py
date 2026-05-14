@@ -84,12 +84,9 @@ def load():
 
 
 df = load()
-    
-
-# ── Sidebar Filters ─────────────────────────────────────────────────────────
-# ── Sidebar Filters ─────────────────────────────────────────────────────────
-st.sidebar.image("assets/kabaddi_logo.png", width=150)
-st.sidebar.title("🏉 NKL Filters")
+ # ── Sidebar Filters ─────────────────────────────────────────────────────────
+st.sidebar.image("https://nepalkabaddileague.com/logo.png", width=160, use_column_width=False)
+st.sidebar.title("🏉 NKL Filters")   
 
 teams    = ["All"] + sorted(df["team"].unique().tolist())
 roles    = ["All"] + sorted(df["role"].unique().tolist())
