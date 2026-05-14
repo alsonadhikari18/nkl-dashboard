@@ -480,7 +480,7 @@ with c1:
         height=450
     )
 
-    st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(     fig1,     use_container_width=True,     key="player1_radar" )
 
 with c2:
 
@@ -500,7 +500,7 @@ with c2:
         height=450
     )
 
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(     fig2,     use_container_width=True,     key="player2_radar" )
 
 # Side-by-Side Stats Table
 compare_df = pd.DataFrame({
