@@ -1,0 +1,85 @@
+team,player,role,total_points,matches,raid_points,tackle_points,successful_raids,super_raids,successful_tackles,super_tackles,do_or_die_points,unsuccessful_raids,super_5s,avg_raid_pts_match,url,raid_success_rate,tackle_contribution,raid_contribution,profile
+Pokhara Lakers,BHUPENDRA BOHARA,Raider,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/bhupendra-2,0.0,0.0,0.0,-
+Pokhara Lakers,BHUWAN BOHORA,All Rounder,35.0,5.0,15.0,3.0,19.0,2.0,3.0,0.0,5.0,20.0,0.0,7.0,https://nepalkabaddileague.com/player/bhuwan-1,48.7,8.6,42.9,Balanced
+Pokhara Lakers,Birendra Kunwar,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/birendra,0.0,0.0,0.0,-
+Pokhara Lakers,JITENDRA AWASTHI,All Rounder,12.0,4.0,2.0,10.0,2.0,0.0,10.0,0.0,1.0,3.0,0.0,3.0,https://nepalkabaddileague.com/player/jitendra-1,40.0,83.3,16.7,Tackle-heavy
+Pokhara Lakers,Kamal Giri,All Rounder,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/kamal,0.0,0.0,0.0,-
+Pokhara Lakers,MD MONIRUL CHODHURY,All Rounder,26.0,5.0,8.0,10.0,11.0,1.0,8.0,1.0,0.0,4.0,0.0,5.2,https://nepalkabaddileague.com/player/md-monirul,73.3,38.5,30.8,Balanced
+Pokhara Lakers,MD SABUZ MIA,Defender,5.0,5.0,1.0,4.0,1.0,0.0,2.0,1.0,0.0,3.0,0.0,1.0,https://nepalkabaddileague.com/player/md-sabuz,25.0,80.0,20.0,-
+Pokhara Lakers,NAGESHOR THARU,Unknown,24.0,4.0,16.0,5.0,11.0,1.0,5.0,0.0,1.0,4.0,0.0,6.0,https://nepalkabaddileague.com/player/nageshor-1,73.3,20.8,66.7,-
+Pokhara Lakers,PRADIP MIJAR,Raider,19.0,5.0,12.0,3.0,11.0,0.0,1.0,1.0,0.0,21.0,0.0,3.8,https://nepalkabaddileague.com/player/pradip-1,34.4,15.8,63.2,-
+Pokhara Lakers,RABIN KUNWAR,All Rounder,2.0,3.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,6.0,0.0,0.67,https://nepalkabaddileague.com/player/rabin-2,14.3,0.0,50.0,Balanced
+Pokhara Lakers,ROHAN SHRESTHA,Raider,4.0,2.0,4.0,0.0,1.0,1.0,0.0,0.0,0.0,1.0,0.0,2.0,https://nepalkabaddileague.com/player/rohan-1,50.0,0.0,100.0,-
+Pokhara Lakers,SANDESH TAMANG,Unknown,9.0,4.0,3.0,1.0,6.0,0.0,1.0,0.0,3.0,5.0,0.0,2.25,https://nepalkabaddileague.com/player/sandesh-1,54.5,11.1,33.3,-
+Pokhara Lakers,SARMAN PRAJAPATI,Raider,3.0,3.0,3.0,0.0,3.0,0.0,0.0,0.0,0.0,8.0,0.0,1.0,https://nepalkabaddileague.com/player/sarman-1,27.3,0.0,100.0,-
+Pokhara Lakers,SUSHIL RAM LUHAR,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/sushil-ram-1,0.0,0.0,0.0,-
+Kathmandu Mavericks,ALEX SAHANI,Unknown,3.0,3.0,0.0,3.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,1.0,https://nepalkabaddileague.com/player/alex-1,0.0,100.0,0.0,-
+Kathmandu Mavericks,BHOLA YADAV,All Rounder,3.0,3.0,0.0,3.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0,1.0,https://nepalkabaddileague.com/player/bhola-1,0.0,100.0,0.0,Tackle-heavy
+Kathmandu Mavericks,BINAY KUMAR KOIRI,Raider,3.0,3.0,0.0,3.0,0.0,0.0,3.0,0.0,0.0,0.0,0.0,1.0,https://nepalkabaddileague.com/player/binay-kumar-1,0.0,100.0,0.0,-
+Kathmandu Mavericks,DURGESHWOR KOIRI,All Rounder,1.0,3.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,2.0,0.0,0.33,https://nepalkabaddileague.com/player/durgeshwor,33.3,0.0,100.0,Raid-heavy
+Kathmandu Mavericks,GHANSHYAM ROKA MAGAR,Raider,174.0,8.0,117.0,5.0,125.0,6.0,3.0,1.0,6.0,19.0,0.0,21.75,https://nepalkabaddileague.com/player/ghanshyam-roka,86.8,2.9,67.2,-
+Kathmandu Mavericks,LAL MOHAR YADAV,Raider,0.0,2.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,3.0,0.0,0.0,https://nepalkabaddileague.com/player/lal-mohar-1,0.0,0.0,0.0,-
+Kathmandu Mavericks,MD MIJANUR RAHMAN,Raider,63.0,8.0,44.0,6.0,45.0,2.0,6.0,0.0,3.0,34.0,0.0,7.88,https://nepalkabaddileague.com/player/md-mijanur,57.0,9.5,69.8,-
+Kathmandu Mavericks,MEGHRAJ GIRI,Unknown,14.0,6.0,0.0,14.0,0.0,0.0,14.0,0.0,0.0,0.0,0.0,2.33,https://nepalkabaddileague.com/player/meghraj-1,0.0,100.0,0.0,-
+Kathmandu Mavericks,PRAMOD SHRESTHA,All Rounder,11.0,7.0,7.0,2.0,4.0,1.0,0.0,1.0,1.0,5.0,0.0,1.57,https://nepalkabaddileague.com/player/pramod-2,44.4,18.2,63.6,Raid-heavy
+Kathmandu Mavericks,RAHUL KUMAR RAY,Raider,2.0,3.0,1.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.67,https://nepalkabaddileague.com/player/rahul-kumar-1,100.0,0.0,50.0,-
+Kathmandu Mavericks,ROENGROM CHATURONPHAISAN,All Rounder,3.0,4.0,0.0,3.0,0.0,0.0,3.0,0.0,0.0,4.0,0.0,0.75,https://nepalkabaddileague.com/player/roengrom,0.0,100.0,0.0,Tackle-heavy
+Kathmandu Mavericks,SAGAR CHAUDHARY,All Rounder,4.0,5.0,1.0,1.0,3.0,0.0,1.0,0.0,0.0,6.0,0.0,0.8,https://nepalkabaddileague.com/player/sagar-3,33.3,25.0,25.0,Balanced
+Kathmandu Mavericks,SAHARAT PHETCHUI,Defender,18.0,4.0,0.0,18.0,0.0,0.0,16.0,1.0,0.0,0.0,0.0,4.5,https://nepalkabaddileague.com/player/saharat,0.0,100.0,0.0,-
+Kathmandu Mavericks,SOHAIL ISLAM,All Rounder,13.0,6.0,0.0,13.0,0.0,0.0,13.0,0.0,0.0,0.0,0.0,2.17,https://nepalkabaddileague.com/player/sohail-2,0.0,100.0,0.0,Tackle-heavy
+Janakpur Knights,BISHAL THAPA,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/bishal,0.0,0.0,0.0,-
+Janakpur Knights,Chayaphon Kamunee,Raider,109.0,7.0,81.0,1.0,82.0,3.0,1.0,0.0,16.0,32.0,0.0,15.57,https://nepalkabaddileague.com/player/chayaphon,71.9,0.9,74.3,-
+Janakpur Knights,Dilan Sanjaya,Raider,14.0,5.0,2.0,12.0,1.0,0.0,12.0,0.0,0.0,5.0,0.0,2.8,https://nepalkabaddileague.com/player/dilan,16.7,85.7,14.3,-
+Janakpur Knights,GIRIRAJ ROKA MAGAR,Unknown,0.0,3.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,https://nepalkabaddileague.com/player/giriraj-roka,0.0,0.0,0.0,-
+Janakpur Knights,HARISH KHATRI,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/harish-4,0.0,0.0,0.0,-
+Janakpur Knights,Laxmamohan Thanushan,All Rounder,11.0,4.0,6.0,2.0,6.0,1.0,2.0,0.0,0.0,13.0,0.0,2.75,https://nepalkabaddileague.com/player/laxmamohan,31.6,18.2,54.5,Balanced
+Janakpur Knights,MD SAHIL SEIKH,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/md-sahil-1,0.0,0.0,0.0,-
+Janakpur Knights,NABIN LUHAR,All Rounder,11.0,6.0,6.0,3.0,8.0,0.0,3.0,0.0,2.0,15.0,0.0,1.83,https://nepalkabaddileague.com/player/nabin-4,34.8,27.3,54.5,Balanced
+Janakpur Knights,RAMU TAMATTA,All Rounder,16.0,7.0,8.0,6.0,9.0,0.0,4.0,1.0,2.0,59.0,0.0,2.29,https://nepalkabaddileague.com/player/ramu-1,13.2,37.5,50.0,Balanced
+Janakpur Knights,RUPAK BHUJU,All Rounder,1.0,1.0,0.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,https://nepalkabaddileague.com/player/rupak-1,0.0,100.0,0.0,Tackle-heavy
+Janakpur Knights,SABIN BOHAJU,All Rounder,22.0,7.0,1.0,21.0,1.0,0.0,21.0,0.0,0.0,2.0,0.0,3.14,https://nepalkabaddileague.com/player/sabin-1,33.3,95.5,4.5,Tackle-heavy
+Janakpur Knights,SAHID ANSARI,All Rounder,5.0,3.0,4.0,1.0,1.0,1.0,1.0,0.0,0.0,9.0,0.0,1.67,https://nepalkabaddileague.com/player/sahid-1,10.0,20.0,80.0,Raid-heavy
+Janakpur Knights,SANGAM CHAUDHARY,All Rounder,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/sangam-1,0.0,0.0,0.0,-
+Janakpur Knights,Tanongsak Srihera,Defender,36.0,7.0,1.0,35.0,1.0,0.0,35.0,0.0,0.0,0.0,0.0,5.14,https://nepalkabaddileague.com/player/tanongsak-srihera,100.0,97.2,2.8,-
+Dhangadi Wild Cats,AAKASH BHATT,All Rounder,2.0,2.0,0.0,2.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,1.0,https://nepalkabaddileague.com/player/aakash-1,0.0,100.0,0.0,Tackle-heavy
+Dhangadi Wild Cats,Ahangama Polwattha Galappatthige,Raider,64.0,6.0,31.0,4.0,52.0,0.0,2.0,1.0,3.0,21.0,0.0,10.67,https://nepalkabaddileague.com/player/ahangama,71.2,6.2,48.4,-
+Dhangadi Wild Cats,ASHOK THAPA MAGAR,All Rounder,17.0,4.0,0.0,17.0,0.0,0.0,9.0,4.0,0.0,5.0,0.0,4.25,https://nepalkabaddileague.com/player/ashok-2,0.0,100.0,0.0,Tackle-heavy
+Dhangadi Wild Cats,BISHRAM KHATIK,Raider,14.0,5.0,0.0,14.0,0.0,0.0,6.0,4.0,0.0,3.0,0.0,2.8,https://nepalkabaddileague.com/player/bishram-1,0.0,100.0,0.0,-
+Dhangadi Wild Cats,GOVINDA KHADKA,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/govinda-2,0.0,0.0,0.0,-
+Dhangadi Wild Cats,KAMLESH LONIYA,All Rounder,2.0,2.0,0.0,2.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,1.0,https://nepalkabaddileague.com/player/kamlesh-2,0.0,100.0,0.0,Tackle-heavy
+Dhangadi Wild Cats,MANOJ BHATTA KAPADI,All Rounder,8.0,3.0,0.0,7.0,1.0,0.0,5.0,1.0,0.0,0.0,0.0,2.67,https://nepalkabaddileague.com/player/manoj-bhatta,100.0,87.5,0.0,Tackle-heavy
+Dhangadi Wild Cats,Md Yeasin Arafat,All Rounder,24.0,5.0,17.0,0.0,18.0,1.0,0.0,0.0,0.0,16.0,0.0,4.8,https://nepalkabaddileague.com/player/md-yeasin,52.9,0.0,70.8,Raid-heavy
+Dhangadi Wild Cats,PADAM BDR. BISTA,Raider,21.0,6.0,13.0,4.0,15.0,0.0,2.0,1.0,2.0,16.0,0.0,3.5,https://nepalkabaddileague.com/player/padam-bahadur-1,48.4,19.0,61.9,-
+Dhangadi Wild Cats,PRAKASH GIRI,All Rounder,18.0,3.0,12.0,3.0,11.0,0.0,3.0,0.0,2.0,13.0,0.0,6.0,https://nepalkabaddileague.com/player/prakash-2,45.8,16.7,66.7,Raid-heavy
+Dhangadi Wild Cats,RAHUL CHAUDHARY,Raider,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/rahul-3,0.0,0.0,0.0,-
+Dhangadi Wild Cats,RANJIT GAJMER,Unknown,8.0,3.0,0.0,8.0,0.0,0.0,8.0,0.0,0.0,0.0,0.0,2.67,https://nepalkabaddileague.com/player/ranjit-3,0.0,100.0,0.0,-
+Dhangadi Wild Cats,Stephen Amollo Adongo,Unknown,20.0,5.0,14.0,1.0,12.0,1.0,1.0,0.0,1.0,0.0,0.0,4.0,https://nepalkabaddileague.com/player/stephen,100.0,5.0,70.0,-
+Dhangadi Wild Cats,SUSHIL KUMAR CHAUDHARY,All Rounder,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/sushil-kumar-1,0.0,0.0,0.0,-
+Butwal Bulls,AKASH MALLA,Unknown,3.0,2.0,1.0,2.0,1.0,0.0,2.0,0.0,0.0,0.0,0.0,1.5,https://nepalkabaddileague.com/player/akash-1,100.0,66.7,33.3,-
+Butwal Bulls,Franklyne Odhare,All Rounder,6.0,5.0,6.0,0.0,5.0,0.0,0.0,0.0,0.0,0.0,0.0,1.2,https://nepalkabaddileague.com/player/franklyne,100.0,0.0,100.0,Raid-heavy
+Butwal Bulls,GANESH PARKI,All Rounder,49.0,5.0,38.0,1.0,33.0,2.0,1.0,0.0,8.0,37.0,0.0,9.8,https://nepalkabaddileague.com/player/ganesh-1,47.1,2.0,77.6,Raid-heavy
+Butwal Bulls,George Embugwa,All Rounder,11.0,4.0,8.0,0.0,8.0,0.0,0.0,0.0,1.0,1.0,0.0,2.75,https://nepalkabaddileague.com/player/george,88.9,0.0,72.7,Raid-heavy
+Butwal Bulls,ISRAR KHAN,All Rounder,10.0,5.0,8.0,1.0,7.0,0.0,1.0,0.0,2.0,14.0,0.0,2.0,https://nepalkabaddileague.com/player/israr-2,33.3,10.0,80.0,Raid-heavy
+Butwal Bulls,KHAGENDRA RAJ JOSHI,Unknown,4.0,2.0,2.0,2.0,2.0,0.0,2.0,0.0,0.0,4.0,0.0,2.0,https://nepalkabaddileague.com/player/khagendra-raj-1,33.3,50.0,50.0,-
+Butwal Bulls,KUMAR LAMA,Raider,3.0,4.0,0.0,2.0,0.0,0.0,2.0,0.0,0.0,0.0,0.0,0.75,https://nepalkabaddileague.com/player/kumar-2,0.0,66.7,0.0,-
+Butwal Bulls,MD Roman Hossain,Raider,12.0,5.0,0.0,12.0,0.0,0.0,8.0,2.0,0.0,0.0,0.0,2.4,https://nepalkabaddileague.com/player/md-roman,0.0,100.0,0.0,-
+Butwal Bulls,MOBARAK MIYA,Raider,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/mobarak,0.0,0.0,0.0,-
+Butwal Bulls,Mohammed Shahan,Defender,20.0,5.0,10.0,1.0,12.0,0.0,1.0,0.0,4.0,15.0,0.0,4.0,https://nepalkabaddileague.com/player/mohammed,44.4,5.0,50.0,-
+Butwal Bulls,NABIN DEUBA,Raider,16.0,5.0,2.0,14.0,2.0,0.0,8.0,3.0,0.0,1.0,0.0,3.2,https://nepalkabaddileague.com/player/nabin-3,66.7,87.5,12.5,-
+Butwal Bulls,RAHUL ARYAL,Unknown,4.0,1.0,0.0,4.0,0.0,0.0,2.0,1.0,0.0,0.0,0.0,4.0,https://nepalkabaddileague.com/player/rahul,0.0,100.0,0.0,-
+Butwal Bulls,RAKESH KUMAR YADAV,All Rounder,2.0,1.0,1.0,0.0,2.0,0.0,0.0,0.0,0.0,2.0,0.0,2.0,https://nepalkabaddileague.com/player/rakesh-kumar-1,50.0,0.0,50.0,Balanced
+Butwal Bulls,SAROJ ADHIKARI,All Rounder,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/saroj-1,0.0,0.0,0.0,-
+Biratnagar Bahubali,AMIT KUMAR RAJBHAR,All Rounder,15.0,7.0,1.0,14.0,1.0,0.0,14.0,0.0,1.0,4.0,0.0,2.14,https://nepalkabaddileague.com/player/amit-kumar-1,20.0,93.3,6.7,Tackle-heavy
+Biratnagar Bahubali,BINAY GOSAIN,All Rounder,1.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.0,1.0,https://nepalkabaddileague.com/player/binay-1,100.0,0.0,0.0,Balanced
+Biratnagar Bahubali,GHANSHYAM YADAV,Raider,3.0,3.0,1.0,0.0,2.0,0.0,0.0,0.0,1.0,1.0,0.0,1.0,https://nepalkabaddileague.com/player/ghanshyam-2,66.7,0.0,33.3,-
+Biratnagar Bahubali,KALYAN BHUJEL,Unknown,17.0,6.0,3.0,14.0,0.0,1.0,6.0,4.0,0.0,1.0,0.0,2.83,https://nepalkabaddileague.com/player/kalyan-1,0.0,82.4,17.6,-
+Biratnagar Bahubali,MIRAP THAPA MAGAR,Raider,1.0,1.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,https://nepalkabaddileague.com/player/mirap-1,50.0,0.0,0.0,-
+Biratnagar Bahubali,NOPPHADON PONTAISONG,Raider,96.0,7.0,59.0,5.0,60.0,5.0,5.0,0.0,11.0,41.0,0.0,13.71,https://nepalkabaddileague.com/player/nopphadon,59.4,5.2,61.5,-
+Biratnagar Bahubali,RAJU BABU YADAV,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/raju-babu-1,0.0,0.0,0.0,-
+Biratnagar Bahubali,RATTANAKON YOSUNGNOEN,All Rounder,17.0,5.0,3.0,13.0,3.0,0.0,7.0,3.0,0.0,2.0,0.0,3.4,https://nepalkabaddileague.com/player/rattanakon,60.0,76.5,17.6,Tackle-heavy
+Biratnagar Bahubali,SATISH KUMAR KURMI,Raider,23.0,7.0,12.0,4.0,15.0,0.0,2.0,1.0,1.0,26.0,0.0,3.29,https://nepalkabaddileague.com/player/satish-kumar-1,36.6,17.4,52.2,-
+Biratnagar Bahubali,SUMIT PRASAD MAHATO THARU,Raider,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/sumit-prasad-1,0.0,0.0,0.0,-
+Biratnagar Bahubali,SURAJ BOHORA,Unknown,26.0,7.0,0.0,26.0,0.0,0.0,22.0,2.0,0.0,5.0,0.0,3.71,https://nepalkabaddileague.com/player/suraj-1,0.0,100.0,0.0,-
+Biratnagar Bahubali,SUSHIL CHUNARA,Raider,34.0,7.0,27.0,0.0,22.0,2.0,0.0,0.0,2.0,28.0,0.0,4.86,https://nepalkabaddileague.com/player/sushil-1,44.0,0.0,79.4,-
+Biratnagar Bahubali,TILAK GURUNG,Unknown,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,https://nepalkabaddileague.com/player/tilak-2,0.0,0.0,0.0,-
+Biratnagar Bahubali,VISHAL CHAUDHARY,Raider,3.0,4.0,2.0,0.0,3.0,0.0,0.0,0.0,1.0,4.0,0.0,0.75,https://nepalkabaddileague.com/player/vishal,42.9,0.0,66.7,-
