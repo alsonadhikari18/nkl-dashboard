@@ -87,7 +87,8 @@ df = load()
     
 
 # ── Sidebar Filters ─────────────────────────────────────────────────────────
-st.sidebar.image("https://nepalkabaddileague.com/logo.png", width=160, use_column_width=False)
+# ── Sidebar Filters ─────────────────────────────────────────────────────────
+st.sidebar.image("assets/kabaddi_logo.png", width=150)
 st.sidebar.title("🏉 NKL Filters")
 
 teams    = ["All"] + sorted(df["team"].unique().tolist())
