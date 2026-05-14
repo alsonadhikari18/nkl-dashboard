@@ -43,6 +43,26 @@ def load():
     for c in num_cols:
         if c in df.columns:
             df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0)
+            # Raid Efficiency %
+df["raid_efficiency"] = (
+    df["successful_raids"] /
+    (
+        df["successful_raids"] +
+        df["unsuccessful_raids"]
+    ).replace(0, 1)
+) * 100
+
+# Tackle Efficiency
+df["tackle_efficiency"] = (
+    df["successful_tackles"] /
+    df["matches"].replace(0, 1)
+)
+
+# Clutch Index
+df["clutch_index"] = (
+    df["do_or_die_points"] /
+    df["total_points"].replace(0, 1)
+) * 100
     return df
 
 df = load()
@@ -55,6 +75,7 @@ teams    = ["All"] + sorted(df["team"].unique().tolist())
 roles    = ["All"] + sorted(df["role"].unique().tolist())
 sel_team = st.sidebar.selectbox("Team",  teams)
 sel_role = st.sidebar.selectbox("Role",  roles)
+search_player = st.sidebar.text_input("🔍 Search Player")
 min_pts  = st.sidebar.slider(
     "Min Total Points", 0, int(df["total_points"].max()), 0
 )
@@ -67,6 +88,11 @@ if sel_team != "All":
     fdf = fdf[fdf["team"] == sel_team]
 if sel_role != "All":
     fdf = fdf[fdf["role"] == sel_role]
+    if search_player:
+    fdf = fdf[
+        fdf["player"]
+        .str.contains(search_player, case=False, na=False)
+    ]
 fdf = fdf[fdf["total_points"] >= min_pts]
 fdf = fdf[fdf["matches"] >= min_matches]
 
@@ -86,6 +112,12 @@ c5.metric("Super Tackles",      int(fdf["super_tackles"].sum()))
 c6.metric("Super 5s",           int(fdf["super_5s"].sum()))
 
 st.divider()
+tab1, tab2, tab3, tab4 = st.tabs([
+    "Overview",
+    "Raid Analysis",
+    "Defense",
+    "Player Analytics"
+])
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SECTION 2 — TOP SCORERS + TEAM POINTS
@@ -112,13 +144,45 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
 with col2:
-    st.markdown("**🍩 Team Points Share**")
-    team_pts = fdf.groupby("team")["total_points"].sum().reset_index()
-    fig = px.pie(
-        team_pts, names="team", values="total_points",
-        color_discrete_sequence=px.colors.qualitative.Bold,
-        hole=0.45
+
+    st.markdown("**🏆 Team Performance Ranking**")
+
+    team_rank = (
+        fdf.groupby("team")
+        .agg({
+            "total_points":"sum",
+            "successful_raids":"sum",
+            "successful_tackles":"sum",
+            "matches":"max"
+        })
+        .reset_index()
     )
+
+    team_rank["points_per_match"] = (
+        team_rank["total_points"] /
+        team_rank["matches"].replace(0,1)
+    ).round(2)
+
+    fig = px.bar(
+        team_rank.sort_values(
+            "points_per_match",
+            ascending=True
+        ),
+        x="points_per_match",
+        y="team",
+        orientation="h",
+        color="points_per_match",
+        text="points_per_match"
+    )
+
+    fig.update_layout(
+        margin=dict(l=0,r=0,t=10,b=0),
+        height=380,
+        xaxis_title="Points Per Match",
+        yaxis_title=""
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
     fig.update_traces(textposition="outside", textinfo="percent+label")
     fig.update_layout(
         showlegend=False,
@@ -339,48 +403,103 @@ else:
 st.divider()
 
 # ══════════════════════════════════════════════════════════════════════════════
-# SECTION 6 — PLAYER COMPARISON (select 2 players side by side)
+# SECTION 6 — ADVANCED PLAYER COMPARISON
 # ══════════════════════════════════════════════════════════════════════════════
-st.subheader("⚡ Player Comparison")
+
+st.subheader("⚡ Advanced Player Comparison")
 
 all_names = sorted(fdf["player"].unique().tolist())
-cc1, cc2 = st.columns(2)
-p1 = cc1.selectbox("Player 1", all_names, index=0)
-p2 = cc2.selectbox("Player 2", all_names, index=min(1, len(all_names)-1))
 
-stat_cols = [
-    "total_points","matches","raid_points","tackle_points",
-    "successful_raids","super_raids","successful_tackles",
-    "super_tackles","do_or_die_points","unsuccessful_raids",
-    "super_5s","avg_raid_pts_match"
+col_p1, col_p2 = st.columns(2)
+
+p1 = col_p1.selectbox(
+    "Select Player 1",
+    all_names,
+    index=0
+)
+
+p2 = col_p2.selectbox(
+    "Select Player 2",
+    all_names,
+    index=min(1, len(all_names)-1)
+)
+
+metrics = [
+    "raid_points",
+    "tackle_points",
+    "successful_raids",
+    "successful_tackles",
+    "super_raids",
+    "super_tackles",
+    "do_or_die_points"
 ]
 
-p1_data = fdf[fdf["player"] == p1][stat_cols].iloc[0] if len(fdf[fdf["player"]==p1]) > 0 else pd.Series([0]*len(stat_cols), index=stat_cols)
-p2_data = fdf[fdf["player"] == p2][stat_cols].iloc[0] if len(fdf[fdf["player"]==p2]) > 0 else pd.Series([0]*len(stat_cols), index=stat_cols)
+player1 = fdf[fdf["player"] == p1].iloc[0]
+player2 = fdf[fdf["player"] == p2].iloc[0]
 
-fig = go.Figure()
-fig.add_trace(go.Bar(
-    name=p1, x=stat_cols, y=p1_data.values,
-    marker_color="#e74c3c", text=p1_data.values, textposition="outside"
-))
-fig.add_trace(go.Bar(
-    name=p2, x=stat_cols, y=p2_data.values,
-    marker_color="#3498db", text=p2_data.values, textposition="outside"
-))
-fig.update_layout(
-    barmode="group",
-    margin=dict(l=0,r=0,t=10,b=0), height=380,
-    xaxis_tickangle=-30,
-    legend=dict(orientation="h", y=1.1),
-    xaxis_title="", yaxis_title="Value"
-)
-st.plotly_chart(fig, use_container_width=True)
+# Radar Charts
+c1, c2 = st.columns(2)
 
-st.divider()
+with c1:
+
+    fig1 = go.Figure()
+
+    fig1.add_trace(go.Scatterpolar(
+        r=[player1[m] for m in metrics],
+        theta=metrics,
+        fill='toself',
+        name=p1
+    ))
+
+    fig1.update_layout(
+        polar=dict(radialaxis=dict(visible=True)),
+        showlegend=False,
+        title=p1,
+        height=450
+    )
+
+    st.plotly_chart(fig1, use_container_width=True)
+
+with c2:
+
+    fig2 = go.Figure()
+
+    fig2.add_trace(go.Scatterpolar(
+        r=[player2[m] for m in metrics],
+        theta=metrics,
+        fill='toself',
+        name=p2
+    ))
+
+    fig2.update_layout(
+        polar=dict(radialaxis=dict(visible=True)),
+        showlegend=False,
+        title=p2,
+        height=450
+    )
+
+    st.plotly_chart(fig2, use_container_width=True)
+
+# Side-by-Side Stats Table
+compare_df = pd.DataFrame({
+    "Metric": metrics,
+    p1: [player1[m] for m in metrics],
+    p2: [player2[m] for m in metrics]
+})
+
+st.dataframe(compare_df, use_container_width=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # SECTION 7 — FULL PLAYER TABLE
 # ══════════════════════════════════════════════════════════════════════════════
+csv = fdf.to_csv(index=False).encode("utf-8")
+
+st.download_button(
+    "⬇ Download Filtered Data",
+    csv,
+    "nkl_filtered.csv",
+    "text/csv"
+)
 st.subheader("📋 Full Player Stats Table")
 st.dataframe(
     fdf.drop(columns=["url"], errors="ignore")
