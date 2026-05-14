@@ -86,13 +86,16 @@ min_matches = st.sidebar.slider(
 fdf = df.copy()
 if sel_team != "All":
     fdf = fdf[fdf["team"] == sel_team]
+
 if sel_role != "All":
     fdf = fdf[fdf["role"] == sel_role]
-    if search_player:
+
+if search_player:
     fdf = fdf[
         fdf["player"]
         .str.contains(search_player, case=False, na=False)
     ]
+
 fdf = fdf[fdf["total_points"] >= min_pts]
 fdf = fdf[fdf["matches"] >= min_matches]
 
