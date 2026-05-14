@@ -205,7 +205,7 @@ with col2:
     )
 
     st.plotly_chart(fig, use_container_width=True)
-    fig.update_traces(textposition="outside", textinfo="percent+label")
+
     fig.update_layout(
         showlegend=False,
         margin=dict(l=0,r=0,t=10,b=0),
