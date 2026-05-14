@@ -63,7 +63,7 @@ df["clutch_index"] = (
     df["do_or_die_points"] /
     df["total_points"].replace(0, 1)
 ) * 100
-    return df
+return df
 
 df = load()
 
