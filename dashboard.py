@@ -72,11 +72,21 @@ def load():
     df = pd.read_csv("players_clean.csv")
 
     num_cols = [
-        "total_points","matches","raid_points","tackle_points",
-        "successful_raids","super_raids","successful_tackles",
-        "super_tackles","do_or_die_points","unsuccessful_raids",
-        "super_5s","avg_raid_pts_match",
-        "raid_success_rate","raid_contribution","tackle_contribution"
+        "total_points",
+        "matches",
+        "raid_points",
+        "tackle_points",
+        "successful_raids",
+        "super_raids",
+        "successful_tackles",
+        "super_tackles",
+        "do_or_die_points",
+        "unsuccessful_raids",
+        "super_5s",
+        "avg_raid_pts_match",
+        "raid_success_rate",
+        "raid_contribution",
+        "tackle_contribution"
     ]
 
     for c in num_cols:
@@ -86,9 +96,8 @@ def load():
                 errors="coerce"
             ).fillna(0)
 
-    # ── Advanced Metrics ───────────────────────
+    # Advanced Metrics
 
-    # Raid Efficiency %
     df["raid_efficiency"] = (
         df["successful_raids"] /
         (
@@ -97,19 +106,18 @@ def load():
         ).replace(0, 1)
     ) * 100
 
-    # Tackle Efficiency
     df["tackle_efficiency"] = (
         df["successful_tackles"] /
         df["matches"].replace(0, 1)
     )
 
-    # Clutch Index
     df["clutch_index"] = (
         df["do_or_die_points"] /
         df["total_points"].replace(0, 1)
     ) * 100
 
     return df
+    
 
 # ── Sidebar Filters ─────────────────────────────────────────────────────────
 st.sidebar.image("https://nepalkabaddileague.com/logo.png", width=160, use_column_width=False)
