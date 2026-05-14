@@ -32,42 +32,6 @@ st.markdown("""
 # ── Load Data ───────────────────────────────────────────────────────────────
 @st.cache_data
 def load():
-    df = pd.read_csv("players_clean.csv")
-    num_cols = [
-        "total_points","matches","raid_points","tackle_points",
-        "successful_raids","super_raids","successful_tackles",
-        "super_tackles","do_or_die_points","unsuccessful_raids",
-        "super_5s","avg_raid_pts_match",
-        "raid_success_rate","raid_contribution","tackle_contribution"
-    ]
-    for c in num_cols:
-        if c in df.columns:
-            df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0)
-            # Raid Efficiency %
-df["raid_efficiency"] = (
-    df["successful_raids"] /
-    (
-        df["successful_raids"] +
-        df["unsuccessful_raids"]
-    ).replace(0, 1)
-) * 100
-
-# Tackle Efficiency
-df["tackle_efficiency"] = (
-    df["successful_tackles"] /
-    df["matches"].replace(0, 1)
-)
-
-# Clutch Index
-df["clutch_index"] = (
-    df["do_or_die_points"] /
-    df["total_points"].replace(0, 1)
-) * 100
-return df
-
-df = load()
-@st.cache_data
-def load():
 
     df = pd.read_csv("players_clean.csv")
 
@@ -117,6 +81,9 @@ def load():
     ) * 100
 
     return df
+
+
+df = load()
     
 
 # ── Sidebar Filters ─────────────────────────────────────────────────────────
