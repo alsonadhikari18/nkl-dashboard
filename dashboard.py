@@ -2,719 +2,258 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
+import numpy as np
 
-# ═════════════════════════════════════════════════════════════
+# ─────────────────────────────────────────────
 # PAGE CONFIG
-# ═════════════════════════════════════════════════════════════
-
+# ─────────────────────────────────────────────
 st.set_page_config(
     page_title="NKL Analytics Dashboard",
     page_icon="🏉",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    layout="wide"
 )
 
-# ═════════════════════════════════════════════════════════════
-# CUSTOM CSS
-# ═════════════════════════════════════════════════════════════
-
-custom_css = """
-<style>
-
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
-
-.block-container {
-    padding-top: 1rem;
-    max-width: 96%;
-}
-
-div[data-testid="metric-container"] {
-    background: linear-gradient(
-        145deg,
-        #1f2937,
-        #111827
-    );
-    border: 1px solid #374151;
-    padding: 16px;
-    border-radius: 14px;
-}
-
-.stTabs [data-baseweb="tab-list"] {
-    gap: 24px;
-}
-
-.stTabs [data-baseweb="tab"] {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.watermark {
-    position: fixed;
-    bottom: 12px;
-    right: 16px;
-    background: rgba(20,20,20,0.45);
-    backdrop-filter: blur(6px);
-    padding: 8px 14px;
-    border-radius: 12px;
-    font-size: 13px;
-    color: white;
-    z-index: 999999;
-    pointer-events: none;
-    opacity: 0.75;
-}
-
-</style>
-"""
-
-st.markdown(
-    custom_css,
-    unsafe_allow_html=True
-)
-
-# ═════════════════════════════════════════════════════════════
+# ─────────────────────────────────────────────
 # WATERMARK
-# ═════════════════════════════════════════════════════════════
+# ─────────────────────────────────────────────
+st.markdown("""
+<style>
+.footer {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    font-size: 12px;
+    color: gray;
+}
+</style>
+<div class="footer">Made by Alson Adhikari</div>
+""", unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <div class="watermark">
-        NKL Analytics • Built by Alson Adhikari
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-# ═════════════════════════════════════════════════════════════
-# LOAD DATA
-# ═════════════════════════════════════════════════════════════
-
+# ─────────────────────────────────────────────
+# DATA LOADING
+# ─────────────────────────────────────────────
 @st.cache_data
 def load_data():
-
     df = pd.read_csv("players_clean.csv")
 
-    numeric_cols = [
-        "total_points",
-        "matches",
-        "raid_points",
-        "tackle_points",
-        "successful_raids",
-        "super_raids",
-        "successful_tackles",
-        "super_tackles",
-        "do_or_die_points",
-        "unsuccessful_raids",
-        "super_5s",
-        "avg_raid_pts_match",
-        "raid_success_rate",
-        "raid_contribution",
-        "tackle_contribution"
-    ]
+    # numeric cleanup
+    num_cols = df.columns.drop(["team", "player", "role", "url", "profile"], errors="ignore")
+    for col in num_cols:
+        df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
-    for col in numeric_cols:
+    # ───────── ROLE NORMALIZATION ENGINE ─────────
+    def normalize_role(r):
+        r = str(r).strip().lower()
+        if r in ["defender", "defence", "defense"]:
+            return "Defender"
+        elif r in ["raider"]:
+            return "Raider"
+        elif r in ["all rounder", "allrounder"]:
+            return "All Rounder"
+        else:
+            return "Unknown"
 
-        if col in df.columns:
+    df["role"] = df["role"].apply(normalize_role)
 
-            df[col] = pd.to_numeric(
-                df[col],
-                errors="coerce"
-            ).fillna(0)
+    # ───────── FIX UNKNOWN ROLE LOGIC ─────────
+    df.loc[
+        (df["role"] == "Unknown") & (df["tackle_points"] > df["raid_points"]),
+        "role"
+    ] = "Defender"
 
-    # CLEAN ROLE NAMES
+    df.loc[
+        (df["role"] == "Unknown") & (df["raid_points"] > df["tackle_points"]),
+        "role"
+    ] = "Raider"
 
-    df["role"] = (
-        df["role"]
-        .astype(str)
-        .str.strip()
-        .str.title()
-    )
-
-    role_map = {
-        "Left Corner": "Defender",
-        "Right Corner": "Defender",
-        "Left Cover": "Defender",
-        "Right Cover": "Defender",
-        "Cover": "Defender",
-        "Corner": "Defender",
-        "Raider": "Raider",
-        "All Rounder": "All Rounder"
-    }
-
-    df["role"] = df["role"].replace(role_map)
-
-    # ADVANCED METRICS
-
+    # ───────── ADVANCED METRICS ─────────
     df["raid_efficiency"] = (
         df["successful_raids"] /
-        (
-            df["successful_raids"] +
-            df["unsuccessful_raids"]
-        ).replace(0, 1)
+        (df["successful_raids"] + df["unsuccessful_raids"]).replace(0, 1)
     ) * 100
-
-    df["tackle_efficiency"] = (
-        df["successful_tackles"] /
-        df["matches"].replace(0, 1)
-    )
 
     df["clutch_index"] = (
         df["do_or_die_points"] /
         df["total_points"].replace(0, 1)
     ) * 100
 
+    df["impact_score"] = (
+        df["total_points"] +
+        df["raid_points"] * 0.8 +
+        df["tackle_points"] * 0.9 +
+        df["super_raids"] * 2 +
+        df["super_tackles"] * 2
+    ) / df["matches"].replace(0, 1)
+
     return df
 
 
 df = load_data()
 
-# ═════════════════════════════════════════════════════════════
-# SIDEBAR
-# ═════════════════════════════════════════════════════════════
+# ─────────────────────────────────────────────
+# SIDEBAR FILTERS (ONLY SAFE FILTERS)
+# ─────────────────────────────────────────────
+st.sidebar.title("🏉 NKL Filters")
 
-try:
+teams = ["All"] + sorted(df["team"].unique().tolist())
 
-    st.sidebar.image(
-        "assets/nkl_logo.png",
-        width=180
-    )
-
-except:
-
-    st.sidebar.title("🏉 NKL")
-
-st.sidebar.title("Dashboard Filters")
-
-teams = ["All"] + sorted(
-    df["team"].dropna().unique()
-)
-
-selected_team = st.sidebar.selectbox(
-    "Select Team",
-    teams
-)
-
-search_player = st.sidebar.text_input(
-    "Search Player"
-)
-
+sel_team = st.sidebar.selectbox("Team", teams)
+search = st.sidebar.text_input("Search Player")
 min_matches = st.sidebar.slider(
-    "Minimum Matches Played",
-    0,
-    int(df["matches"].max()),
-    0
+    "Min Matches", 0, int(df["matches"].max()), 0
 )
 
-# ═════════════════════════════════════════════════════════════
-# DATAFRAME ARCHITECTURE
-# ═════════════════════════════════════════════════════════════
+# ─────────────────────────────────────────────
+# DATA LAYERS (IMPORTANT FIX)
+# ─────────────────────────────────────────────
+df_master = df.copy()
 
-# LEAGUE DATA
-league_df = df.copy()
+df_team = df_master[df_master["team"] == sel_team] if sel_team != "All" else df_master.copy()
 
-# TEAM DATA
-team_df = df.copy()
+df_player = df_team.copy()
 
-# PLAYER DATA
-player_df = df.copy()
+if search:
+    df_player = df_player[df_player["player"].str.contains(search, case=False)]
 
-# APPLY TEAM FILTER
+df_player = df_player[df_player["matches"] >= min_matches]
 
-if selected_team != "All":
+# ─────────────────────────────────────────────
+# LEAGUE KPIs (GLOBAL - NEVER FILTERED)
+# ─────────────────────────────────────────────
+st.title("🏅 Nepal Kabaddi League Analytics Dashboard")
+st.caption(f"Showing {len(df_player)} players")
 
-    team_df = team_df[
-        team_df["team"] == selected_team
-    ]
+league_matches = df_master.groupby("team")["matches"].max().sum()
 
-    player_df = player_df[
-        player_df["team"] == selected_team
-    ]
-
-# APPLY PLAYER SEARCH
-
-if search_player:
-
-    player_df = player_df[
-        player_df["player"]
-        .str.contains(
-            search_player,
-            case=False,
-            na=False
-        )
-    ]
-
-# APPLY MATCH FILTER
-
-player_df = player_df[
-    player_df["matches"] >= min_matches
-]
-
-# RAIDERS & DEFENDERS
-
-raiders_df = team_df[
-    team_df["role"] == "Raider"
-]
-
-defenders_df = team_df[
-    team_df["role"] == "Defender"
-]
-
-all_rounders_df = team_df[
-    team_df["role"] == "All Rounder"
-]
-
-# ═════════════════════════════════════════════════════════════
-# HEADER
-# ═════════════════════════════════════════════════════════════
-
-st.title("🏆 Nepal Kabaddi League Analytics Dashboard")
-
-st.caption(
-    f"Showing {len(player_df)} filtered players"
-)
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("Players", len(df_player))
+c2.metric("Total Points", int(df_master["total_points"].sum()))
+c3.metric("League Matches", int(league_matches))
+c4.metric("Teams", df_master["team"].nunique())
 
 st.divider()
 
-# ═════════════════════════════════════════════════════════════
-# KPI CARDS
-# ═════════════════════════════════════════════════════════════
-
-k1, k2, k3, k4, k5, k6 = st.columns(6)
-
-k1.metric(
-    "Players",
-    len(team_df)
-)
-
-k2.metric(
-    "Total Points",
-    int(team_df["total_points"].sum())
-)
-
-k3.metric(
-    "League Matches",
-    int(
-        league_df.groupby("team")["matches"]
-        .max()
-        .sum()
-    )
-)
-
-k4.metric(
-    "Super Raids",
-    int(team_df["super_raids"].sum())
-)
-
-k5.metric(
-    "Super Tackles",
-    int(team_df["super_tackles"].sum())
-)
-
-k6.metric(
-    "Do-or-Die Points",
-    int(team_df["do_or_die_points"].sum())
-)
-
-st.divider()
-
-# ═════════════════════════════════════════════════════════════
+# ─────────────────────────────────────────────
 # TABS
-# ═════════════════════════════════════════════════════════════
-
+# ─────────────────────────────────────────────
 tab1, tab2, tab3, tab4 = st.tabs([
     "Overview",
-    "Raid Analysis",
-    "Defense Analysis",
-    "Player Analytics"
+    "Attack",
+    "Defense",
+    "Players"
 ])
 
-# ═════════════════════════════════════════════════════════════
-# OVERVIEW TAB
-# ═════════════════════════════════════════════════════════════
-
+# ─────────────────────────────────────────────
+# OVERVIEW (GLOBAL + TEAM MIX)
+# ─────────────────────────────────────────────
 with tab1:
+    st.subheader("League Overview")
 
-    st.subheader("📊 League Overview")
+    top_players = df_master.nlargest(10, "total_points")
 
-    c1, c2 = st.columns(2)
+    fig = px.bar(
+        top_players,
+        x="total_points",
+        y="player",
+        color="team",
+        orientation="h"
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
-    with c1:
+    team_stats = df_master.groupby("team")[["total_points","raid_points","tackle_points"]].sum().reset_index()
 
-        st.markdown("### 🏅 Top Scorers")
+    fig2 = px.bar(
+        team_stats,
+        x="team",
+        y=["raid_points","tackle_points"],
+        barmode="group"
+    )
+    st.plotly_chart(fig2, use_container_width=True)
 
-        top10 = player_df.nlargest(
-            10,
-            "total_points"
-        )
+# ─────────────────────────────────────────────
+# ATTACK ANALYSIS
+# ─────────────────────────────────────────────
+with tab2:
+    st.subheader("Raider Analysis")
 
+    raiders = df_master[df_master["role"] == "Raider"]
+
+    fig = px.bar(
+        raiders.nlargest(10, "raid_points"),
+        x="raid_points",
+        y="player",
+        orientation="h",
+        color="team"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
+    team_raid = raiders.groupby("team")[["raid_points","super_raids"]].sum().reset_index()
+
+    fig2 = px.bar(
+        team_raid,
+        x="team",
+        y="raid_points"
+    )
+    st.plotly_chart(fig2, use_container_width=True)
+
+# ─────────────────────────────────────────────
+# DEFENSE ANALYSIS (FIXED)
+# ─────────────────────────────────────────────
+with tab3:
+    st.subheader("Defender Analysis")
+
+    defenders = df_master[df_master["role"] == "Defender"]
+
+    if defenders.empty:
+        st.warning("No defender data found after normalization")
+    else:
         fig = px.bar(
-            top10,
-            x="total_points",
+            defenders.nlargest(10, "tackle_points"),
+            x="tackle_points",
             y="player",
             orientation="h",
-            color="team",
-            text="total_points",
-            color_discrete_sequence=px.colors.qualitative.Bold
+            color="team"
         )
+        st.plotly_chart(fig, use_container_width=True)
 
-        fig.update_layout(
-            yaxis=dict(autorange="reversed"),
-            height=420,
-            margin=dict(l=0,r=0,t=20,b=0),
-            xaxis_title="Points",
-            yaxis_title=""
+        team_def = defenders.groupby("team")[["tackle_points","super_tackles"]].sum().reset_index()
+
+        fig2 = px.bar(
+            team_def,
+            x="team",
+            y="tackle_points"
         )
+        st.plotly_chart(fig2, use_container_width=True)
 
-        st.plotly_chart(
-            fig,
-            use_container_width=True
-        )
-
-    with c2:
-
-        st.markdown("### 📈 Team Ranking")
-
-        team_rank = (
-            team_df.groupby("team")
-            .agg({
-                "total_points":"sum",
-                "matches":"max"
-            })
-            .reset_index()
-        )
-
-        team_rank["points_per_match"] = (
-            team_rank["total_points"] /
-            team_rank["matches"].replace(0,1)
-        ).round(2)
-
-        fig = px.bar(
-            team_rank.sort_values(
-                "points_per_match",
-                ascending=True
-            ),
-            x="points_per_match",
-            y="team",
-            orientation="h",
-            color="points_per_match",
-            text="points_per_match"
-        )
-
-        fig.update_layout(
-            height=420,
-            margin=dict(l=0,r=0,t=20,b=0)
-        )
-
-        st.plotly_chart(
-            fig,
-            use_container_width=True
-        )
-
-# ═════════════════════════════════════════════════════════════
-# RAID ANALYSIS TAB
-# ═════════════════════════════════════════════════════════════
-
-with tab2:
-
-    st.subheader("⚔️ Raid Analysis")
-
-    if raiders_df.empty:
-
-        st.warning(
-            "No raider data available."
-        )
-
-    else:
-
-        r1, r2 = st.columns(2)
-
-        with r1:
-
-            st.markdown(
-                "### Successful vs Unsuccessful Raids"
-            )
-
-            raid_df = (
-                raiders_df.groupby("team")[
-                    [
-                        "successful_raids",
-                        "unsuccessful_raids"
-                    ]
-                ]
-                .sum()
-                .reset_index()
-            )
-
-            fig = px.bar(
-                raid_df,
-                x="team",
-                y=[
-                    "successful_raids",
-                    "unsuccessful_raids"
-                ],
-                barmode="stack",
-                text_auto=True
-            )
-
-            fig.update_layout(
-                height=380
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-        with r2:
-
-            st.markdown("### Top Raiders")
-
-            top_raiders = raiders_df.nlargest(
-                10,
-                "avg_raid_pts_match"
-            )
-
-            fig = px.bar(
-                top_raiders,
-                x="avg_raid_pts_match",
-                y="player",
-                orientation="h",
-                color="team",
-                text="avg_raid_pts_match"
-            )
-
-            fig.update_layout(
-                yaxis=dict(autorange="reversed"),
-                height=380
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-# ═════════════════════════════════════════════════════════════
-# DEFENSE ANALYSIS TAB
-# ═════════════════════════════════════════════════════════════
-
-with tab3:
-
-    st.subheader("🛡️ Defense Analysis")
-
-    if defenders_df.empty:
-
-        st.warning(
-            "No defender data available."
-        )
-
-    else:
-
-        d1, d2 = st.columns(2)
-
-        with d1:
-
-            st.markdown("### Team Defense")
-
-            defense_df = (
-                defenders_df.groupby("team")[
-                    [
-                        "successful_tackles",
-                        "super_tackles"
-                    ]
-                ]
-                .sum()
-                .reset_index()
-            )
-
-            fig = px.bar(
-                defense_df,
-                x="team",
-                y=[
-                    "successful_tackles",
-                    "super_tackles"
-                ],
-                barmode="group",
-                text_auto=True
-            )
-
-            fig.update_layout(
-                height=380
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-        with d2:
-
-            st.markdown("### Top Defenders")
-
-            top_defenders = defenders_df.nlargest(
-                10,
-                "successful_tackles"
-            )
-
-            fig = px.bar(
-                top_defenders,
-                x="successful_tackles",
-                y="player",
-                orientation="h",
-                color="team",
-                text="successful_tackles"
-            )
-
-            fig.update_layout(
-                yaxis=dict(autorange="reversed"),
-                height=380
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-# ═════════════════════════════════════════════════════════════
-# PLAYER ANALYTICS TAB
-# ═════════════════════════════════════════════════════════════
-
+# ─────────────────────────────────────────────
+# PLAYER ANALYTICS (FILTERED)
+# ─────────────────────────────────────────────
 with tab4:
-
-    st.subheader("⚡ Player Analytics")
-
-    all_players = sorted(
-        player_df["player"]
-        .dropna()
-        .unique()
-    )
-
-    if len(all_players) >= 2:
-
-        p1_col, p2_col = st.columns(2)
-
-        player1_name = p1_col.selectbox(
-            "Select Player 1",
-            all_players,
-            index=0
-        )
-
-        player2_name = p2_col.selectbox(
-            "Select Player 2",
-            all_players,
-            index=1
-        )
-
-        metrics = [
-            "raid_points",
-            "tackle_points",
-            "successful_raids",
-            "successful_tackles",
-            "super_raids",
-            "super_tackles",
-            "do_or_die_points"
-        ]
-
-        p1 = player_df[
-            player_df["player"] == player1_name
-        ].iloc[0]
-
-        p2 = player_df[
-            player_df["player"] == player2_name
-        ].iloc[0]
-
-        rc1, rc2 = st.columns(2)
-
-        with rc1:
-
-            radar1 = go.Figure()
-
-            radar1.add_trace(
-                go.Scatterpolar(
-                    r=[p1[m] for m in metrics],
-                    theta=metrics,
-                    fill='toself'
-                )
-            )
-
-            radar1.update_layout(
-                polar=dict(
-                    radialaxis=dict(visible=True)
-                ),
-                showlegend=False,
-                title=player1_name,
-                height=450
-            )
-
-            st.plotly_chart(
-                radar1,
-                use_container_width=True
-            )
-
-        with rc2:
-
-            radar2 = go.Figure()
-
-            radar2.add_trace(
-                go.Scatterpolar(
-                    r=[p2[m] for m in metrics],
-                    theta=metrics,
-                    fill='toself'
-                )
-            )
-
-            radar2.update_layout(
-                polar=dict(
-                    radialaxis=dict(visible=True)
-                ),
-                showlegend=False,
-                title=player2_name,
-                height=450
-            )
-
-            st.plotly_chart(
-                radar2,
-                use_container_width=True
-            )
-
-        compare_df = pd.DataFrame({
-            "Metric": metrics,
-            player1_name: [
-                p1[m] for m in metrics
-            ],
-            player2_name: [
-                p2[m] for m in metrics
-            ]
-        })
-
-        st.dataframe(
-            compare_df,
-            use_container_width=True
-        )
-
-    st.divider()
-
-    st.markdown("### 📋 Full Player Table")
+    st.subheader("Player Analytics")
 
     st.dataframe(
-        player_df.drop(
-            columns=["url"],
-            errors="ignore"
-        )
-        .sort_values(
-            "total_points",
-            ascending=False
-        )
-        .reset_index(drop=True),
-        use_container_width=True,
-        height=500
+        df_player.sort_values("total_points", ascending=False),
+        use_container_width=True
     )
 
-    csv = player_df.to_csv(index=False).encode("utf-8")
-
-    st.download_button(
-        "⬇ Download Filtered CSV",
-        csv,
-        "nkl_filtered.csv",
-        "text/csv"
+    fig = px.scatter(
+        df_player,
+        x="raid_points",
+        y="tackle_points",
+        size="total_points",
+        color="team",
+        hover_name="player"
     )
+    st.plotly_chart(fig, use_container_width=True)
+
+# ─────────────────────────────────────────────
+# DOWNLOAD
+# ─────────────────────────────────────────────
+csv = df_player.to_csv(index=False).encode("utf-8")
+
+st.download_button(
+    "Download Data",
+    csv,
+    "nkl_data.csv",
+    "text/csv"
+)
